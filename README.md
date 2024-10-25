@@ -50,8 +50,7 @@ Ensure the following software is installed:
 - **npm** (v6.x or later)
 - **MongoDB** (v4.x or later)
 - **Git**
-- **Docker** (Optional: to containerize the app)
-- **OpenWeatherMap API Key** (You can get one from [here](https://openweathermap.org/api))
+- **OpenWeatherMap API Key (One Call API 3.0)** (You can get one from [here](https://openweathermap.org/api))
 
 ---
 
