@@ -19,7 +19,7 @@
 
 ## Introduction
 
-The **Real-Time Weather Monitoring System** continuously monitors weather data in real-time using the [OpenWeatherMap API](https://openweathermap.org/api). It retrieves weather data for key metros in India (Delhi, Mumbai, Chennai, Bangalore, Kolkata, Hyderabad), processes it to generate daily summaries, and triggers alerts based on user-defined thresholds.
+The **Real-Time Weather Monitoring System** continuously monitors weather data in real-time using the [OpenWeatherMap API](https://openweathermap.org/api) (One Call API 3.0). It retrieves weather data for key metros in India (Delhi, Mumbai, Chennai, Bangalore, Kolkata, Hyderabad), processes it to generate daily summaries, and triggers alerts based on user-defined thresholds.
 
 ---
 
