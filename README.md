@@ -119,6 +119,20 @@ This will start the frontend development server on ```http://localhost:3000```.
 
 ---
 
+
+## Weather API Information
+
+This project utilizes the **OpenWeather One Call API 3.0** to provide accurate and up-to-date weather information, including:
+
+### API Subscription and Usage
+To use this API, you’ll need to **sign up** and **subscribe** on the [OpenWeather website](https://openweathermap.org/api) to receive an API key. Note that the free tier allows up to **1,000 API calls per day**; usage beyond this limit incurs a small fee (0.0012 GBP per extra call).
+
+For more details on the One Call API and its subscription plans, refer to the [API Documentation](https://openweathermap.org/api/one-call-3).
+
+Please ensure your API key is correctly configured in the project for proper functionality.
+
+---
+
 # Contact Information
 
 If you have any questions or would like to reach out, feel free to contact me via the following channels:
