@@ -104,3 +104,25 @@ From the `backend` directory, run:
 
 ```bash
 npm start
+```
+
+This will start the backend server on ```http://localhost:5000``` (default port can be configured).
+
+
+### Starting the Frontend Server
+
+From the `frontend` directory, run:
+```bash
+num run dev
+```
+This will start the frontend development server on ```http://localhost:3000```.
+
+---
+
+# Contact Information
+
+If you have any questions or would like to reach out, feel free to contact me via the following channels:
+
+- **Email**: [singhdeepak.bengaluru7@gmail.com](mailto:singhdeepak.bengaluru7@gmail.com)
+- **Phone No**: [+91 9170520433](9170520433)
+
