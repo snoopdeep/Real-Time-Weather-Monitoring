@@ -1,0 +1,79 @@
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #1e90ff;
+  color: white;
+}
+
+.navbar-logo {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.navbar-title {
+  font-size: 20px;
+}
+
+/* App Container */
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 20%;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-right: 2px solid #e0e0e0;
+}
+
+/* Content Styles */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* City List Styles */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+li:hover {
+  text-decoration: underline;
+}
+
+li.bold {
+  font-weight: bold;
+}
+
+/* Threshold Settings */
+form {
+  margin-top: 20px;
+}
+
+input {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4682b4;
+}

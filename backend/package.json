@@ -1,0 +1,19 @@
+{
+    "name": "weather-backend",
+    "version": "1.0.0",
+    "description": "Backend for weather monitoring system",
+    "main": "server.js",
+    "scripts": {
+        "start": "nodemon server.js"
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "cron": "^1.8.2",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "mongoose": "^5.12.3",
+        "node-cron": "^3.0.3",
+        "nodemailer": "^6.9.15",
+        "nodemon": "^3.1.7"
+    }
+}
