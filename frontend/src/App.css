@@ -1,10 +1,21 @@
+/* Reset body and html margins to remove extra space */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Navbar Styles */
 .navbar {
   display: flex;
   align-items: center;
-  padding: 10px;
-  background-color: #1e90ff;
+  padding: 15px;
+  background-color: #d6ba3b;
   color: white;
+  margin: 0; /* Remove any default margin */
+  width: 100%;
+  box-sizing: border-box;
+  top:0%;
 }
 
 .navbar-logo {
@@ -14,13 +25,16 @@
 
 .navbar-title {
   font-size: 20px;
+  color: rgba(0, 0, 0, 0.977);
+  font-weight: 600;
 }
 
 /* App Container */
 .app-container {
   display: flex;
-  height: 100vh;
+  height: 100vh; /* This takes the full viewport height */
 }
+
 
 /* Sidebar Styles */
 .sidebar {
