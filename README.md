@@ -65,7 +65,7 @@ Ensure the following software is installed:
     git clone https://github.com/snoopdeep/Real-Time-Weather-Monitoring.git
     ```
     ```bash
-    cd Real-Time-Weather-Monitoring.git/backend
+    cd Real-Time-Weather-Monitoring/backend
     ```
 
 2. **Install Dependencies**
