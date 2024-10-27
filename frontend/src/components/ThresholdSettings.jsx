@@ -14,7 +14,7 @@ function ThresholdSettings() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('${API_URL}/api/weather/set-threshold', {
+      await axios.post(`${API_URL}/api/weather/set-threshold`, {
         email: email || null,
         city: city || null,
         temperature: temperature ? parseFloat(temperature) : null,
