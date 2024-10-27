@@ -1,18 +1,14 @@
-FROM node:20 
 
-WORKDIR /app 
+FROM node:20-alpine
+
+WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install 
+RUN npm install
 
-COPY . . 
+COPY . .
 
-RUN npm run build 
+EXPOSE 5173
 
-RUN npm install -g serve 
-
-EXPOSE 3000 
-
-CMD ["serve","-s","dist"]
-
+CMD ["npm", "run", "dev", "--", "--host"]

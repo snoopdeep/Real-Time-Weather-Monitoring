@@ -160,7 +160,7 @@ exports.getThreshold = async (req, res) => {
 };
 
 exports.sendAlert = async (req, res) => {
-  console.log("This is send alert : ", req.body);
+  // console.log("This is send alert : ", req.body);
   const {
     email,
     city,

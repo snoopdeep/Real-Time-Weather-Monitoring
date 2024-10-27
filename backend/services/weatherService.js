@@ -25,7 +25,7 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.sendThresholdAlertEmail = async (alertData) => {
-  console.log("this is sendThresholdAlertEmail : ", alertData);
+  // console.log("this is sendThresholdAlertEmail : ", alertData);
   try {
     const {
       email,
@@ -114,7 +114,7 @@ exports.sendThresholdAlertEmail = async (alertData) => {
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log("Alert email sent:", info.response);
+    // console.log("Alert email sent:", info.response);
     return true;
   } catch (error) {
     console.error("Error sending alert email:", error.message);
@@ -132,7 +132,7 @@ exports.getCityByName = (cityName) => {
 const fetchWeatherData = async () => {
   for (let city of cities) {
     try {
-      console.log(`Fetching data for ${city.name}`);
+      // console.log(`Fetching data for ${city.name}`);
       const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`;
       const response = await axios.get(url);
       const data = response.data;

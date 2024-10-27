@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 // dotenv.config();
 const API_URL = import.meta.env.VITE_API_URL;
-console.log(API_URL);
 
 function ThresholdSettings() {
   const [email, setEmail] = useState('');

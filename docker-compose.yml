@@ -1,26 +1,64 @@
+# # docker-compose.yml
+# version: "3"
+# services:
+#   backend:
+#     build:
+#       context: ./backend
+#       dockerfile: Dockerfile
+#     ports:
+#       - "5000:5000"  # Map backend container port to host
+#     volumes:
+#       - ./backend:/app  # Sync the backend code for live updates (optional)
+#     environment:
+#       - NODE_ENV=development
+#       # Add any other environment variables your backend needs
+
+#   frontend:
+#     build:
+#       context: ./frontend
+#       dockerfile: Dockerfile
+#     ports:
+#       - "3000:3000"  # Map frontend container port to host
+#     volumes:
+#       - ./frontend:/app  # Sync the frontend code for live updates (optional)
+#     environment:
+#       - NODE_ENV=development
+#       # Add any other environment variables your frontend needs
+
 # docker-compose.yml
-version: "3"
+version: "3.8"
 services:
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"  # Map backend container port to host
+      - "5000:5000"
     volumes:
-      - ./backend:/app  # Sync the backend code for live updates (optional)
+      - ./backend:/app
+      - /app/node_modules
     environment:
       - NODE_ENV=development
-      # Add any other environment variables your backend needs
+      - MONGODB_URI=mongodb://snoopdeep07:qvp5gdkBxPiRqe0t@cluster0-shard-00-02.094wh.mongodb.net:27017,cluster0-shard-00-01.094wh.mongodb.net:27017,cluster0-shard-00-00.094wh.mongodb.net:27017/?authSource=admin&replicaSet=atlas-evx2hc-shard-0&retryWrites=true&w=majority&appName=Cluster0&ssl=true
+    networks:
+      - mern-network
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # Map frontend container port to host
+      - "5173:5173"
     volumes:
-      - ./frontend:/app  # Sync the frontend code for live updates (optional)
+      - ./frontend:/app
+      - /app/node_modules
     environment:
       - NODE_ENV=development
-      # Add any other environment variables your frontend needs
+    depends_on:
+      - backend
+    networks:
+      - mern-network
+
+networks:
+  mern-network:
+    driver: bridge

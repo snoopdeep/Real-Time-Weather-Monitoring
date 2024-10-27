@@ -117,7 +117,6 @@ function WeatherDetails({ city }) {
         const thresholdRes = await axios.get(
           `${API_URL}/api/weather/get-threshold/${city.toLowerCase()}`
         );
-        console.log(`Threshold for ${city} city is `, thresholdRes.data);
 
         if (thresholdRes) {
           const thresholdDataArray = thresholdRes.data;
@@ -127,14 +126,12 @@ function WeatherDetails({ city }) {
           let alertMessages = [];
 
           for (const thresholdData of thresholdDataArray) {
-            console.log(thresholdData);
             const isTemperatureExceeded =
               thresholdData.temperature != null &&
               weatherData.temp > thresholdData.temperature;
             const isConditionMatched =
               thresholdData.condition &&
               weatherData.main.toLowerCase() === thresholdData.condition.toLowerCase();
-            console.log(isTemperatureExceeded, isConditionMatched);
 
             if (isTemperatureExceeded || isConditionMatched) {
               anyAlertTriggered = true;
@@ -181,7 +178,6 @@ function WeatherDetails({ city }) {
   const fetchCurrentWeather = useCallback(async () => {
     try {
       const res = await axios.get(`${API_URL}/api/weather/current/${city}`);
-      console.log(res.data);
       setCurrentWeather(res.data.currentWeather);
       setHourlyForecast(res.data.hourlyForecast);
       setDailyForecast(res.data.dailyForecast);
