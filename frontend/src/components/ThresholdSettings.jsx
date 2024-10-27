@@ -16,9 +16,9 @@ function ThresholdSettings() {
     try {
       await axios.post(`${API_URL}/api/weather/set-threshold`, {
         email: email || null,
-        city: city || null,
+        city: city.toLowerCase() || null,
         temperature: temperature ? parseFloat(temperature) : null,
-        condition: condition || null,
+        condition: condition.toLowerCase() || null,
       });
       alert('Thresholds updated successfully');
       setEmail('');

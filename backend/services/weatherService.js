@@ -9,13 +9,12 @@ require("dotenv").config();
 const API_KEY = process.env.OPENWEATHER_API_KEY;
 const cities = [
   { name: "Delhi", lat: 28.7041, lon: 77.1025 },
-  { name: "Mumbai", lat: 19.0760, lon: 72.8777 },
+  { name: "Mumbai", lat: 19.076, lon: 72.8777 },
   { name: "Chennai", lat: 13.0827, lon: 80.2707 },
   { name: "Bangalore", lat: 12.9716, lon: 77.5946 },
   { name: "Kolkata", lat: 22.5726, lon: 88.3639 },
-  { name: "Hyderabad", lat: 17.3850, lon: 78.4867 },
+  { name: "Hyderabad", lat: 17.385, lon: 78.4867 },
 ];
-
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -26,7 +25,7 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.sendThresholdAlertEmail = async (alertData) => {
-  console.log('this is sendThresholdAlertEmail : ',alertData);
+  console.log("this is sendThresholdAlertEmail : ", alertData);
   try {
     const {
       email,
@@ -37,28 +36,82 @@ exports.sendThresholdAlertEmail = async (alertData) => {
       thresholdCondition,
     } = alertData;
 
-    const message = `
-Weather Alert for ${city}!
+    // Determine if temperature and condition thresholds are set
+    const tempThresholdSet = thresholdTemp != null;
+    const conditionThresholdSet =
+      thresholdCondition != null && thresholdCondition !== "";
 
-Current Weather:
-- Temperature: ${temperature.toFixed(2)}°C
-- Condition: ${condition}
+    // Construct the HTML message with inline styling
+    const messageHtml = `
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; color: #333333;">
+  <div style="padding: 20px;">
+    <p>Dear User,</p>
 
-Your Alert Thresholds:
-- Temperature: ${thresholdTemp}°C
-- Condition: ${thresholdCondition}
+    <p>We wanted to inform you that the current weather conditions in <strong>${city}</strong> have met your alert criteria.</p>
 
-This alert was triggered because the current weather has exceeded your set thresholds.
+    <div style="margin-bottom: 20px;">
+      <h3 style="color: #333333;">Current Weather in ${city}:</h3>
+      <ul style="list-style-type: none; padding: 0;">
+        <li style="margin-bottom: 5px;"><strong>Temperature:</strong> ${temperature.toFixed(
+          2
+        )}°C</li>
+        <li style="margin-bottom: 5px;"><strong>Condition:</strong> ${condition}</li>
+      </ul>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <h3 style="color: #333333;">Your Alert Settings:</h3>
+      <ul style="list-style-type: none; padding: 0;">
+        ${
+          tempThresholdSet
+            ? `<li style="margin-bottom: 5px;"><strong>Temperature Threshold:</strong> ${thresholdTemp}°C</li>`
+            : ""
+        }
+        ${
+          conditionThresholdSet
+            ? `<li style="margin-bottom: 5px;"><strong>Condition Threshold:</strong> ${thresholdCondition}</li>`
+            : ""
+        }
+      </ul>
+    </div>
+
+    <p style="color: #ff0000; font-weight: bold;">
+      ${
+        tempThresholdSet &&
+        (temperature > thresholdTemp || temperature < thresholdTemp)
+          ? `The current temperature of ${temperature.toFixed(2)}°C ${
+              temperature > thresholdTemp ? "exceeds" : "is below"
+            } your set threshold of ${thresholdTemp}°C.<br>`
+          : ""
+      }
+      ${
+        conditionThresholdSet &&
+        condition.toLowerCase() === thresholdCondition.toLowerCase()
+          ? `The current weather condition matches your alert condition of "${thresholdCondition}".`
+          : ""
+      }
+    </p>
+
+    <p>Please take any necessary precautions based on this information.</p>
+
+    <p>Thank you for using our Weather Alert Service.</p>
+
+    <p>Best regards,<br/>
+     RealTimeWeatherAnalysis.co</p>
+  </div>
+</body>
+</html>
     `;
-    console.log(message);
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: `Weather Alert for ${city}`,
-      text: message,
+      // text: messageText,
+      html: messageHtml,
     };
-    // console.log('mail options : ', mailOptions);
 
     const info = await transporter.sendMail(mailOptions);
     console.log("Alert email sent:", info.response);
@@ -84,7 +137,7 @@ const fetchWeatherData = async () => {
       const response = await axios.get(url);
       const data = response.data;
 
-      const temp = data.current.temp - 273.15; 
+      const temp = data.current.temp - 273.15;
       const main = data.current.weather[0].main;
       const dt = data.current.dt;
 
@@ -92,13 +145,11 @@ const fetchWeatherData = async () => {
       const dateTimeIST = new Date(
         dateTimeUTC.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
       );
-      const dateIST = dateTimeIST.toISOString().split("T")[0]; 
+      const dateIST = dateTimeIST.toISOString().split("T")[0];
 
-      const date = dateIST; 
+      const date = dateIST;
 
       await updateDailySummary(city.name, date, temp, main);
-
-      
     } catch (error) {
       console.error(
         `Error fetching weather data for ${city.name}:`,
@@ -154,7 +205,7 @@ const updateDailySummary = async (cityName, date, temp, condition) => {
         minTemp: temp,
         conditionCounts: conditionCounts,
         dominantCondition: condition,
-        lastUpdated: new Date(), 
+        lastUpdated: new Date(),
       });
 
       await summary.save();

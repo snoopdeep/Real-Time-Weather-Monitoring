@@ -31,52 +31,64 @@ function WeatherDetails({ city }) {
   const fetchSummaryRef = useRef();
 
   const API_URL = import.meta.env.VITE_API_URL;
-    console.log(API_URL);
 
   const checkThresholdAndAlert = useCallback(
     async (weatherData) => {
       try {
         const thresholdRes = await axios.get(
-          `${API_URL}/api/weather/get-threshold/${city}`
+          `${API_URL}/api/weather/get-threshold/${city.toLowerCase()}`
         );
-        console.log(thresholdRes);
-
+        console.log(`Threshold for ${city} city is `, thresholdRes.data);
+  
         if (thresholdRes) {
-          const thresholdData = thresholdRes.data;
-          setThreshold(thresholdData);
-          const isTemperatureExceeded =
-            thresholdData.temperature &&
-            weatherData.temp < thresholdData.temperature;
-          const isConditionMatched =
-            thresholdData.condition &&
-            weatherData.main === thresholdData.condition;
-
-          if (isTemperatureExceeded || isConditionMatched) {
-            // Create alert message
-            const alertMessage = `Weather Alert! ${
-              isTemperatureExceeded
-                ? `Temperature (${weatherData.temp.toFixed(
-                    2
-                  )}°C) exceeds threshold (${thresholdData.temperature}°C). `
-                : ""
-            }${
-              isConditionMatched
-                ? `Weather condition (${weatherData.main}) matches alert condition (${thresholdData.condition}).`
-                : ""
-            }`;
-
-            setAlert(alertMessage);
+          const thresholdDataArray = thresholdRes.data;
+          setThreshold(thresholdDataArray); 
+  
+          let anyAlertTriggered = false;
+          let alertMessages = [];
+  
+          for (const thresholdData of thresholdDataArray) {
+            console.log(thresholdData);
+            const isTemperatureExceeded =
+              thresholdData.temperature != null &&
+              weatherData.temp > thresholdData.temperature; 
+            const isConditionMatched =
+              thresholdData.condition &&
+              weatherData.main.toLowerCase() === thresholdData.condition.toLowerCase();
+            console.log(isTemperatureExceeded, isConditionMatched);
+  
+            if (isTemperatureExceeded || isConditionMatched) {
+              anyAlertTriggered = true;
+              const alertMessage = `Weather Alert for ${thresholdData.email}! ${
+                isTemperatureExceeded
+                  ? `Temperature (${weatherData.temp.toFixed(
+                      2
+                    )}°C) exceeds threshold (${thresholdData.temperature}°C). `
+                  : ""
+              }${
+                isConditionMatched
+                  ? `Weather condition (${weatherData.main}) matches alert condition (${thresholdData.condition}).`
+                  : ""
+              }`;
+  
+              alertMessages.push(alertMessage);
+  
+              await axios.post(`${API_URL}/api/weather/send-alert`, {
+                email: thresholdData.email,
+                city: city,
+                temperature: weatherData.temp,
+                condition: weatherData.main,
+                thresholdTemp: thresholdData.temperature,
+                thresholdCondition: thresholdData.condition,
+              });
+            }
+          }
+  
+          if (anyAlertTriggered) {
+            // Display combined alert messages
+            setAlert(alertMessages.join("\n"));
             setTimeout(() => setAlert(null), 10000);
-
-            await axios.post(`${API_URL}/api/weather/send-alert`, {
-              email: thresholdData.email,
-              city: city,
-              temperature: weatherData.temp,
-              condition: weatherData.main,
-              thresholdTemp: thresholdData.temperature,
-              thresholdCondition: thresholdData.condition,
-            });
-
+  
             setEmailAlert(true);
             // Clear email alert after 5 seconds
             setTimeout(() => setEmailAlert(false), 5000);
@@ -88,7 +100,7 @@ function WeatherDetails({ city }) {
     },
     [city]
   );
-
+  
   const fetchCurrentWeather = useCallback(async () => {
     try {
       const res = await axios.get(`${API_URL}/api/weather/current/${city}`);
@@ -162,7 +174,6 @@ function WeatherDetails({ city }) {
 
   const tempUnitSymbol = tempUnit === "C" ? "°C" : "°F";
 
-  // Generate summary for hourly forecast
   const generateHourlySummary = (hourlyData) => {
     if (!hourlyData || hourlyData.length === 0) {
       setHourlySummaryText("No hourly forecast data available.");

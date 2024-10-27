@@ -147,7 +147,7 @@ exports.getCurrentWeather = async (req, res) => {
 exports.getThreshold = async (req, res) => {
   const cityName = req.params.city;
   try {
-    const threshold = await Threshold.findOne({ city: cityName });
+    const threshold = await Threshold.find({ city: cityName });
     if (threshold) {
       res.json(threshold);
     } else {
