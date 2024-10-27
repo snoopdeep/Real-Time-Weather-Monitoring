@@ -118,7 +118,7 @@ From the `frontend` directory, run:
 ```bash
 npm run dev
 ```
-This will start the frontend development server on ```http://localhost:3000```.
+This will start the frontend development server on ```http://localhost:5173```.
 
 ---
 
@@ -139,9 +139,9 @@ Run the following command to build and start the containers:
 docker-compose up --build
 ```
 
-Once everything has started up, you should be able to access the webapp via [http://localhost:3000/](http://localhost:3000/) on your host machine.
+Once everything has started up, you should be able to access the webapp via [http://localhost:5173/](http://localhost:5173/) on your host machine.
 ```bash
-http://localhost:3000/
+http://localhost:5173/
 ```
 
 To stop the services, use:
