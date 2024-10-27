@@ -12,6 +12,7 @@
 - [Running the Application](#running-the-application)
   - [Starting the Backend Server](#starting-the-backend-server)
   - [Starting the Frontend Server](#starting-the-frontend-server)
+- [Starting with Docker](#Starting-with-Docker) 
 - [Weather API Integration](#weather-api-integration)
 - [Contact Information](#contact-information)
 
@@ -121,6 +122,35 @@ This will start the frontend development server on ```http://localhost:3000```.
 
 ---
 
+
+Starting with Docker
+-----
+I assume you have installed Docker and it is running.
+
+See the [Docker website](http://www.docker.io/gettingstarted/#h_installation) for installation instructions.
+
+**Environment Variables:** Ensure .env variables (e.g., MONGODB_URI, OPENWEATHER_API_KEY) are configured correctly in backend/.env.
+
+
+Build
+-----
+Run the following command to build and start the containers:
+```bash
+docker-compose up --build
+```
+
+Once everything has started up, you should be able to access the webapp via [http://localhost:3000/](http://localhost:3000/) on your host machine.
+```bash
+http://localhost:3000/
+```
+
+To stop the services, use:
+
+```bash
+docker-compose down
+```
+
+---
 
 ## Weather API Information
 
