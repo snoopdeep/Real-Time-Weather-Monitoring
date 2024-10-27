@@ -47,7 +47,7 @@ The application uses a **Client-Server** architecture:
 
 Ensure the following software is installed:
 
-- **Node.js** (v14.x or later)
+- **Node.js** (v20.x or later)
 - **npm** (v6.x or later)
 - **MongoDB** (v4.x or later)
 - **Git**
