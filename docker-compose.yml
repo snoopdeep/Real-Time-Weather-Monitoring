@@ -1,0 +1,26 @@
+# docker-compose.yml
+version: "3"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  # Map backend container port to host
+    volumes:
+      - ./backend:/app  # Sync the backend code for live updates (optional)
+    environment:
+      - NODE_ENV=development
+      # Add any other environment variables your backend needs
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Map frontend container port to host
+    volumes:
+      - ./frontend:/app  # Sync the frontend code for live updates (optional)
+    environment:
+      - NODE_ENV=development
+      # Add any other environment variables your frontend needs
