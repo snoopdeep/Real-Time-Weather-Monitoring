@@ -1,6 +1,9 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+// dotenv.config();
+const API_URL = import.meta.env.VITE_API_URL;
+console.log(API_URL);
 
 function ThresholdSettings() {
   const [email, setEmail] = useState('');
@@ -11,7 +14,7 @@ function ThresholdSettings() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/weather/set-threshold', {
+      await axios.post('${API_URL}/api/weather/set-threshold', {
         email: email || null,
         city: city || null,
         temperature: temperature ? parseFloat(temperature) : null,

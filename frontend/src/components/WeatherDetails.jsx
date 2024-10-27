@@ -30,11 +30,14 @@ function WeatherDetails({ city }) {
   const fetchCurrentWeatherRef = useRef();
   const fetchSummaryRef = useRef();
 
+  const API_URL = import.meta.env.VITE_API_URL;
+    console.log(API_URL);
+
   const checkThresholdAndAlert = useCallback(
     async (weatherData) => {
       try {
         const thresholdRes = await axios.get(
-          `/api/weather/get-threshold/${city}`
+          `${API_URL}/api/weather/get-threshold/${city}`
         );
         console.log(thresholdRes);
 
@@ -65,7 +68,7 @@ function WeatherDetails({ city }) {
             setAlert(alertMessage);
             setTimeout(() => setAlert(null), 10000);
 
-            await axios.post("/api/weather/send-alert", {
+            await axios.post(`${API_URL}/api/weather/send-alert`, {
               email: thresholdData.email,
               city: city,
               temperature: weatherData.temp,
@@ -88,7 +91,7 @@ function WeatherDetails({ city }) {
 
   const fetchCurrentWeather = useCallback(async () => {
     try {
-      const res = await axios.get(`/api/weather/current/${city}`);
+      const res = await axios.get(`${API_URL}/api/weather/current/${city}`);
       console.log(res.data);
       setCurrentWeather(res.data.currentWeather);
       setHourlyForecast(res.data.hourlyForecast);
@@ -103,7 +106,7 @@ function WeatherDetails({ city }) {
 
   const fetchSummary = useCallback(async () => {
     try {
-      const res = await axios.get(`/api/weather/daily-summary/${city}`);
+      const res = await axios.get(`${API_URL}/api/weather/daily-summary/${city}`);
       setSummary(res.data);
     } catch (err) {
       console.error(err);

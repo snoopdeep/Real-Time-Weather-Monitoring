@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const weatherRouter = require('./routes/weather');
 const dbConfig = require('./config/db');
 require('dotenv').config();
+const cors = require('cors');
 const weatherService = require('./services/weatherService');
 
 const app = express();
@@ -10,6 +11,8 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
+
+app.use(cors());
 
 // Routes
 app.use('/api/weather', weatherRouter);
