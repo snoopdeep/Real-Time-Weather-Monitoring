@@ -113,7 +113,7 @@ This will start the backend server on ```http://localhost:5000``` (default port 
 
 From the `frontend` directory, run:
 ```bash
-num run dev
+npm run dev
 ```
 This will start the frontend development server on ```http://localhost:3000```.
 
